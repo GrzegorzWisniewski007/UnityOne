@@ -34,8 +34,8 @@ public class MyCharacterController : MonoBehaviour
     public bool Run;
 
     //Czulość myszki (Sensitivity)
-    public float MouseSensitivy = 3.0f;
-    public float MouseUpDownMovement = 0.0f;
+    public float MouseSensitivy = 4.0f;
+    public float MouseUpDownMovement = 1.0f;
     //Zakres patrzenia w górę i dół.
     public float MouseUpDownRange = 90.0f;
 
@@ -93,10 +93,14 @@ public class MyCharacterController : MonoBehaviour
         //aktualnaWysokoscSkoku - odpowiada za ruch góra/dół,
         //rochPrzodTyl - odpowiada za ruch przód/tył.
         Vector3 ruch = new Vector3(LeftRightMovement, ActualJumpHeight, ForwardBackMovement);
+        
         //Aktualny obrót gracza razy kierunek w którym sie poruszamy (poprawka na obrót myszką abyśmy szli w kierunku w którym patrzymy).
         ruch = transform.rotation * ruch;
 
         characterControler.Move(ruch * Time.deltaTime);
+
+        //Debug.Log(Input.GetAxis("Horizontal"));
+        transform.Rotate(0f, Input.GetAxis("Horizontal")* 90f, 0f);
 
     }
 
