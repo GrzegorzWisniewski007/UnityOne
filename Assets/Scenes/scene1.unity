@@ -236,7 +236,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1705575788}
+        - m_Target: {fileID: 1705575791}
           m_MethodName: onPointerDownBackwardButton
           m_Mode: 1
           m_Arguments:
@@ -253,7 +253,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1705575788}
+        - m_Target: {fileID: 1705575791}
           m_MethodName: onPointerUpBackwardButton
           m_Mode: 1
           m_Arguments:
@@ -612,7 +612,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 452859708}
   m_LocalRotation: {x: 0.052335896, y: 0, z: 0, w: 0.9986295}
-  m_LocalPosition: {x: 65.297, y: 3.449, z: 62.809998}
+  m_LocalPosition: {x: 65.297, y: 3.66, z: 62.809998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -687,7 +687,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookAt: {fileID: 1705575792}
-  camTransform: {fileID: 0}
 --- !u!1 &517400116
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,7 +951,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1705575788}
+        - m_Target: {fileID: 1705575791}
           m_MethodName: onPointerDownForwardButton
           m_Mode: 1
           m_Arguments:
@@ -969,7 +968,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1705575788}
+        - m_Target: {fileID: 1705575791}
           m_MethodName: onPointerUpForwardButton
           m_Mode: 1
           m_Arguments:
@@ -1643,6 +1642,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1705575791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1705575786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841e845a55479d4429431715bb88519e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterControler: {fileID: 1705575787}
+  WalkSpeed: 5
+  RunningSpeed: 10
+  JumpHeight: 7
+  ActualJumpHeight: 0
+  Velocity: 0
+  Run: 0
 --- !u!4 &1705575792 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400006, guid: 756b0c574f380324a85262e736c0418b, type: 3}
@@ -1737,7 +1754,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1705575788}
+      - m_Target: {fileID: 1705575791}
         m_MethodName: onClickJumpButton
         m_Mode: 1
         m_Arguments:

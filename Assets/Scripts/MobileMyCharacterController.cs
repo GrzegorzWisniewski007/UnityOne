@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyCharacterController : MonoBehaviour
+public class MobileMyCharacterController : MonoBehaviour
 {
     public CharacterController characterControler;
 
-    public Camera Camera;
-
-    private float MoveButtons;
-
-    //Predkosc.
-    public float Velocity = 0f;
     //Prędkość poruszania się gracza.
     public float WalkSpeed = 5.0f;
     //Predkosc biegania.
@@ -21,77 +15,83 @@ public class MyCharacterController : MonoBehaviour
     //Aktualna wysokosc skoku.
     public float ActualJumpHeight = 0f;
 
-    private Animator animator;
+    private bool ForwardButton = false;
+    private bool BackwardButton = false;
 
-    /** 
-	 * Pobranie prędkości poruszania się przód/tył.
-	 * jeżeli wartość dodatnia to poruszamy się do przodu,
-	 * jeżeli wartość ujemna to poruszamy się do tyłu.
-	 */
+    //Predkosc.
+    public float Velocity = 0f;
+
     private float JumpMove = 0.0f;
 
+    private bool JumpButton = false;
+    private bool InAir = false;
+
+    private Animator animator;
 
     /** Zmienna dostarcza informację o tym czy gracz bienie.*/
     public bool Run;
 
-    //Czulość myszki 
-    public float MouseSensitivy = 4.0f;
-
-    Vector3 gestureStartPosition;
-    Vector3 gestureDelta;
-
-
-
     // Use this for initialization
     void Start()
     {
-        if (Application.platform == RuntimePlatform.Android)
+        if (Application.platform != RuntimePlatform.Android)
         {
             this.enabled = false;
         }
-        characterControler = GetComponent<CharacterController>();        
-
         animator = (Animator)GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Mouse();
-        Keyboard();
-    }    
 
-    private void Keyboard()
-    {
-        float ForwardBackMovement = Input.GetAxis("Vertical") * Velocity;
-        Debug.Log(Input.GetAxis("Vertical"));
-        ActualJumpHeight = Jump(ForwardBackMovement);
-
-        //Bieganie
-        if (Input.GetKeyDown("left shift"))
-        {
-            Run = true;
-        }
-        else if (Input.GetKeyUp("left shift"))
-        {
-            Run = false;
-        }
-
-        Runing();
-        //Debug.Log(ForwardBackMovement);
-        Animation(ForwardBackMovement);
-
-        Move(ForwardBackMovement);
     }
 
-    private void Mouse()
+    public void onPointerDownForwardButton()
     {
-        //pobieranie wartości obrotu kamery
-        float CameraAngle = Camera.transform.rotation.eulerAngles.y;
+        ForwardButton = true;
+    }
+    public void onPointerUpForwardButton()
+    {
+        Animation(0);
+        ForwardButton = false;
+    }
 
-        float myszLewoPrawo = Input.GetAxis("Mouse X") * MouseSensitivy;
-        Debug.Log(myszLewoPrawo);
-        transform.rotation = Quaternion.Euler(0f, CameraAngle, 0f);
+    public void onPointerDownBackwardButton()
+    {
+        BackwardButton = true;
+    }
+    public void onPointerUpBackwardButton()
+    {
+        Animation(0);
+        BackwardButton = false;
+    }
+
+    public void onClickJumpButton()
+    {
+        JumpButton = true;
+    }
+
+    private void Animation(float param)
+    {
+        //sterownie animacjami chodzenia/biegania
+        animator.SetFloat("velocity", Mathf.Abs(param));
+    }
+
+    private void MoveForward()
+    {
+        Jump(Velocity);
+        Runing();
+        //Debug.Log(Velocity);
+        Animation(Velocity);
+        Move(Velocity);
+    }
+
+    private void MoveBackward()
+    {
+        Jump(-Velocity);
+        Move(-Velocity);
+        Animation(Velocity);
     }
 
     private void Move(float motion)
@@ -110,12 +110,12 @@ public class MyCharacterController : MonoBehaviour
         move = transform.rotation * move;
 
         characterControler.Move(move * Time.deltaTime);
-    }   
+    }
 
     private float Jump(float move)
     {
         //Skakanie
-        if (characterControler.isGrounded && Input.GetButton("Jump"))
+        if (characterControler.isGrounded && JumpButton)
         {
             animator.SetTrigger("jump");
             ActualJumpHeight = JumpHeight;
@@ -124,7 +124,8 @@ public class MyCharacterController : MonoBehaviour
         else if (!characterControler.isGrounded)
         {
             //Jezeli jestesmy w powietrzu(skok)
-            //Fizyka odpowiadająca za grawitacje (os Y).            
+            //Fizyka odpowiadająca za grawitacje (os Y).
+            InAir = true;
             ActualJumpHeight += Physics.gravity.y * Time.deltaTime * 2;
         }
 
@@ -141,11 +142,5 @@ public class MyCharacterController : MonoBehaviour
         {
             Velocity = WalkSpeed;
         }
-    }
-
-    private void Animation(float param)
-    {
-        //sterownie animacjami chodzenia/biegania
-        animator.SetFloat("velocity", Mathf.Abs(param));
     }
 }
