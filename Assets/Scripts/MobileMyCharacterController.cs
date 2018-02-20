@@ -15,8 +15,11 @@ public class MobileMyCharacterController : MonoBehaviour
     //Aktualna wysokosc skoku.
     public float ActualJumpHeight = 0f;
 
+    //przyciski
     private bool ForwardButton = false;
     private bool BackwardButton = false;
+    private bool LeftButton = false;
+    private bool RightButton = false;
 
     //Predkosc.
     public float Velocity = 0f;
@@ -26,7 +29,7 @@ public class MobileMyCharacterController : MonoBehaviour
     private bool JumpButton = false;
     private bool InAir = false;
 
-    private Animator animator;
+    private Animator animator;    
 
     /** Zmienna dostarcza informację o tym czy gracz bienie.*/
     public bool Run;
@@ -36,7 +39,7 @@ public class MobileMyCharacterController : MonoBehaviour
     {
         if (Application.platform != RuntimePlatform.Android)
         {
-            this.enabled = false;
+            //this.enabled = false;
         }
         animator = (Animator)GetComponent<Animator>();
     }
@@ -44,7 +47,35 @@ public class MobileMyCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ForwardButton)
+        {
+            MoveForward();
+        }
+        if (BackwardButton)
+        {
+            MoveBackward();
+        }
+        if (LeftButton)
+        {
+            Turn(-1);
+        }
+        if (RightButton)
+        {
+            Turn(1);
+        }
 
+        if (JumpButton)
+        {
+            if (!ForwardButton && !BackwardButton)
+            {
+                Jump(0);
+                Move(0);
+            }
+            if (characterControler.isGrounded && InAir)
+            {
+                JumpButton = false;
+            }
+        }
     }
 
     public void onPointerDownForwardButton()
@@ -65,6 +96,26 @@ public class MobileMyCharacterController : MonoBehaviour
     {
         Animation(0);
         BackwardButton = false;
+    }
+
+    public void onPointerDownLeftButton()
+    {
+        LeftButton = true;
+    }
+    public void onPointerUpLeftButton()
+    {
+        Animation(0);
+        LeftButton = false;
+    }
+
+    public void onPointerDownRightButton()
+    {
+        RightButton = true;
+    }
+    public void onPointerUpRightButton()
+    {
+        Animation(0);
+        RightButton = false;
     }
 
     public void onClickJumpButton()
@@ -110,6 +161,14 @@ public class MobileMyCharacterController : MonoBehaviour
         move = transform.rotation * move;
 
         characterControler.Move(move * Time.deltaTime);
+    }
+
+    private void Turn(float direction)
+    {
+        if (characterControler.isGrounded)
+        {
+            transform.Rotate(0, direction > 0 ?  5 : -5, 0);
+        }
     }
 
     private float Jump(float move)

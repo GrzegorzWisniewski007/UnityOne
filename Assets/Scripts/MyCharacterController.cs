@@ -64,7 +64,7 @@ public class MyCharacterController : MonoBehaviour
     private void Keyboard()
     {
         float ForwardBackMovement = Input.GetAxis("Vertical") * Velocity;
-        Debug.Log(Input.GetAxis("Vertical"));
+        //Debug.Log(Input.GetAxis("Vertical"));
         ActualJumpHeight = Jump(ForwardBackMovement);
 
         //Bieganie
@@ -90,7 +90,7 @@ public class MyCharacterController : MonoBehaviour
         float CameraAngle = Camera.transform.rotation.eulerAngles.y;
 
         float myszLewoPrawo = Input.GetAxis("Mouse X") * MouseSensitivy;
-        Debug.Log(myszLewoPrawo);
+        //Debug.Log(myszLewoPrawo);
         transform.rotation = Quaternion.Euler(0f, CameraAngle, 0f);
     }
 
