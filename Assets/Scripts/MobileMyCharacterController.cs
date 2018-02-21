@@ -19,7 +19,7 @@ public class MobileMyCharacterController : MonoBehaviour
     private bool ForwardButton = false;
     private bool BackwardButton = false;
     private bool LeftButton = false;
-    private bool RightButton = false;
+    private bool RightButton = false;   
 
     //Predkosc.
     public float Velocity = 0f;
@@ -29,7 +29,10 @@ public class MobileMyCharacterController : MonoBehaviour
     private bool JumpButton = false;
     private bool InAir = false;
 
-    private Animator animator;    
+    private Animator animator;
+
+    private bool start;
+    float count=10.0f;    
 
     /** Zmienna dostarcza informację o tym czy gracz bienie.*/
     public bool Run;
@@ -76,14 +79,32 @@ public class MobileMyCharacterController : MonoBehaviour
                 JumpButton = false;
             }
         }
+        if (start)
+        {
+            count += Time.deltaTime;
+        }
+        
     }
 
     public void onPointerDownForwardButton()
     {
+        if (count < 1)
+        {
+            Run = true;
+            count = 10.0f;
+            start = false;
+        }
+        else
+        {
+            Run = false;
+            count = 10.0f;
+        }
         ForwardButton = true;
     }
     public void onPointerUpForwardButton()
     {
+        start = true;
+        count = 0.0f;
         Animation(0);
         ForwardButton = false;
     }

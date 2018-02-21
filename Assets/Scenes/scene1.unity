@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -614,7 +614,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 452859708}
   m_LocalRotation: {x: 0.052335896, y: 0, z: 0, w: 0.9986295}
-  m_LocalPosition: {x: 65.297, y: 3.66, z: 62.809998}
+  m_LocalPosition: {x: 65.297, y: 4.8, z: 56.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -688,7 +688,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fdd9e369dc3550419b136ba7066652a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAt: {fileID: 1705575792}
+  target: {fileID: 1705575786}
+  damping: 1
 --- !u!1 &517400116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,10 +2129,6 @@ MonoBehaviour:
   ActualJumpHeight: 0
   Velocity: 0
   Run: 0
---- !u!4 &1705575792 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 400006, guid: 756b0c574f380324a85262e736c0418b, type: 3}
-  m_PrefabInternal: {fileID: 1515962178}
 --- !u!1 &1768666399
 GameObject:
   m_ObjectHideFlags: 0
